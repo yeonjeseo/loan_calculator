@@ -1,8 +1,18 @@
 //Listen for summit
-document.getElementById('loan-form').addEventListener('submit', calculateResult);
+document.getElementById('loan-form').addEventListener('submit', function(e) {
+    // Hide results
+    document.getElementById('results').style.display = 'none';
+
+    // Show loader
+    document.getElementById('loading').style.display = 'block';
+
+    setTimeout(calculateResult, 2000);
+
+    e.preventDefault();
+});
 
 //Function
-function calculateResult(e){
+function calculateResult(){
     console.log('Calculating.....');
     const amount = document.getElementById('amount');
     const interest = document.getElementById('interest');
@@ -24,16 +34,28 @@ function calculateResult(e){
         monthlyPayment.value = monthly.toFixed(2);
         totalPayment.value = (monthly * calculatedPayment).toFixed(2);
         totalInterest.value = ((monthly * calculatedPayment) - principal).toFixed(2);
+
+        // Show results
+        document.getElementById('results').style.display = 'block';
+
+        // Hide loader
+        document.getElementById('loading').style.display = 'none';
+
     }
     else {
         showError("Please check you numbers");
     }
 
-    e.preventDefault();
 }
 
 //Show Error
 function showError(error){
+    // Hide results
+    document.getElementById('results').style.display = 'none';
+
+    // Hide loader
+    document.getElementById('loading').style.display = 'none';
+
     //Create a div
     const errorDiv = document.createElement('div');
 
